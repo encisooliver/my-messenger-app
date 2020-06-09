@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-item>
+    <IonThumbnail *ngIf="isActiveChat" slot="start">
+      <ion-icon name="radio-button-on-outline" color="success" slot="icon-only"></ion-icon>
+    </IonThumbnail>
+    <ion-input [(ngModel)]="user" (keyup)="userNameKeyPress($event)"></ion-input>
+    <ion-button class="btn" [disabled]="isValid" (click)="addSocket()">
+      <ion-icon name="add" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="isActiveChat == true">
+      <ion-item-sliding *ngFor="let user of connections">
+        <ion-item button *ngIf="user.UIId !== currentUserUIId" (click)="showModal(user.Id, user.User)">
+          <IonThumbnail slot="start">
+            <ion-icon name="person" slot="icon-only"></ion-icon>
+          </IonThumbnail>
+          <ion-label>
+            <h4>{{ user.User }}</h4>
+            <h4 [hidden]="true">ID: {{ user.Id }}</h4>
+            <p [hidden]="true">Current User UIID: {{ user.UIId }}</p>
+          </ion-label>
+          <ion-note slot="end" color="primary">
+            <div [id]="user.Id"></div>
+          </ion-note>
+        </ion-item>
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+</ion-content>
